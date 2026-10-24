@@ -1,0 +1,435 @@
+<title>Два окна</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Делаем сайты на заказ: визитки, интернет-магазины, калькуляторы. Портфолио и услуги.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: каждая работа показана как окно браузера с настоящим адресом; страница = набор "вкладок" */
+:root{
+  --bg:#F2F4F7;
+  --surface:#FFFFFF;
+  --ink:#12151B;
+  --muted:#5A6272;
+  --line:#DCE1E9;
+  --accent:#2F5BFF;
+  --accent-ink:#FFFFFF;
+  --amber:#FFB21E;
+  --chip:#E8EDFB;
+  --display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --body:"Golos Text", "Segoe UI", Roboto, system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  /* цвета мини-превью */
+  --red:#D7262E; --blue:#1F4FB8; --dark:#161A22;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1116; --surface:#171B23; --ink:#EEF1F6; --muted:#9AA3B4; --line:#262C38;
+    --accent:#6E8BFF; --accent-ink:#0E1116; --amber:#FFC24D; --chip:#1E2536; --dark:#0A0C10;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1116; --surface:#171B23; --ink:#EEF1F6; --muted:#9AA3B4; --line:#262C38;
+  --accent:#6E8BFF; --accent-ink:#0E1116; --amber:#FFC24D; --chip:#1E2536; --dark:#0A0C10;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font:400 17px/1.6 var(--body);
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+a{color:inherit}
+.wrap{max-width:1120px; margin:0 auto}
+h1,h2,h3{font-family:var(--display); line-height:1.12; text-wrap:balance; margin:0}
+h2{font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-.01em}
+h3{font-size:20px; font-weight:700}
+p{margin:0}
+.eyebrow{font:500 13px/1 var(--mono); text-transform:uppercase; letter-spacing:.12em; color:var(--muted)}
+:focus-visible{outline:3px solid var(--accent); outline-offset:3px; border-radius:6px}
+
+/* ---------- шапка ---------- */
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:22px; flex-wrap:wrap}
+.logo{font:800 18px/1 var(--display); text-decoration:none; display:flex; align-items:center; gap:10px}
+.logo .wins{position:relative; width:34px; height:28px; flex:none}
+.logo .wins i{position:absolute; width:22px; height:18px; border-radius:5px; border:2.5px solid var(--accent)}
+.logo .wins i:first-child{left:0; top:0}
+.logo .wins i:last-child{right:0; bottom:0; background:var(--accent)}
+.team{font:500 15px/1.3 var(--mono); color:var(--muted)}
+.team b{color:var(--ink); font-weight:500}
+.nav{display:flex; gap:22px; flex-wrap:wrap}
+.nav a{text-decoration:none; color:var(--muted); font-weight:500; font-size:15px}
+.nav a:hover{color:var(--ink)}
+
+/* ---------- первый экран ---------- */
+.hero{padding-block:48px 72px; display:grid; gap:40px}
+.hero h1{font-size:clamp(36px,7vw,84px); font-weight:800; letter-spacing:-.02em; max-width:14ch}
+.hero h1 em{font-style:normal; color:var(--accent)}
+.hero .lead{font-size:clamp(18px,2vw,21px); color:var(--muted); max-width:52ch}
+.addr{
+  display:flex; align-items:center; gap:12px; max-width:640px;
+  background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  padding:14px 22px; font:500 clamp(15px,2.4vw,20px)/1.2 var(--mono);
+  box-shadow:0 10px 30px -18px rgba(20,30,60,.35);
+}
+.addr .lock{width:14px; height:14px; flex:none; border:2px solid var(--muted); border-radius:3px; position:relative; top:2px}
+.addr .lock::before{content:""; position:absolute; left:1px; top:-8px; width:8px; height:7px; border:2px solid var(--muted); border-bottom:0; border-radius:6px 6px 0 0}
+.addr .typed{color:var(--ink); white-space:nowrap; overflow:hidden; min-width:0}
+.addr .typed b{color:var(--accent); font-weight:500}
+.caret{width:2px; height:1.1em; background:var(--accent); animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex; gap:12px; flex-wrap:wrap}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:14px 24px; border-radius:12px; font:600 16px/1 var(--body); text-decoration:none; border:1px solid transparent; cursor:pointer}
+.btn.primary{background:var(--accent); color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{border-color:var(--line); background:var(--surface)}
+.btn.ghost:hover{border-color:var(--ink)}
+
+/* ---------- работы ---------- */
+section{padding-block:72px; border-top:1px solid var(--line)}
+.sec-head{display:grid; gap:14px; margin-bottom:40px}
+.sec-head p{color:var(--muted); max-width:56ch}
+.works{display:grid; gap:56px}
+.work{display:grid; grid-template-columns:1.15fr 1fr; gap:40px; align-items:center}
+.work:nth-child(even) .browser{order:2}
+.work > *{min-width:0}
+@media (max-width:860px){ .work{grid-template-columns:1fr; gap:24px} .work:nth-child(even) .browser{order:0} }
+
+.browser{background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:0 24px 50px -30px rgba(20,30,60,.45)}
+.bar{display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line)}
+.dots{display:flex; gap:6px; flex:none}
+.dots span{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.url{flex:1; min-width:0; background:var(--bg); border-radius:8px; padding:6px 12px; font:400 12.5px/1.2 var(--mono); color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.screen{aspect-ratio:16/10; max-width:100%; position:relative; overflow:hidden}
+
+/* превью: магазин */
+.shop{background:#fff; display:flex; flex-direction:column; height:100%}
+.shop .h{display:flex; align-items:center; gap:8px; padding:5% 5% 3%}
+.shop .lg{width:12%; aspect-ratio:2.4; border-radius:4px; background:linear-gradient(90deg,var(--red) 0 50%,var(--blue) 50%)}
+.shop .srch{flex:1; height:16px; border-radius:20px; background:#EEF1F5}
+.shop .cart{width:7%; aspect-ratio:1; border-radius:6px; background:var(--red)}
+.shop .tabs{display:flex; gap:6px; padding:0 5%}
+.shop .tabs span{height:9px; flex:1; border-radius:3px; background:#E4E8EE}
+.shop .tabs span:first-child{background:var(--blue)}
+.shop .grid{flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:4%; padding:5%}
+.shop .card{border:1px solid #E6E9EF; border-radius:6px; display:flex; flex-direction:column; padding:8%; gap:6%}
+.shop .tyre{aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,#fff 0 22%,#9aa0aa 23% 30%,#1b1e24 31% 64%,#2b2f36 65% 70%,transparent 71%)}
+.shop .ln{height:5px; border-radius:3px; background:#E4E8EE}
+.shop .ln.p{width:55%; background:var(--red)}
+.shop .lbl{display:flex; gap:3px}
+.shop .lbl i{flex:1; height:5px; border-radius:2px}
+
+/* превью: визитка */
+.visit{background:var(--dark); height:100%; display:flex; flex-direction:column; padding:7% 7% 5%; gap:7%; color:#fff}
+.visit .t{font:800 clamp(11px,2.1vw,22px)/1.1 var(--display); max-width:11ch}
+.visit .t span{color:#ff5a5f}
+.visit .pill{width:28%; height:clamp(10px,1.6vw,18px); border-radius:20px; background:var(--red)}
+.visit .row{margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:4%}
+.visit .row div{border-radius:8px; background:#232936; padding:7%; display:grid; gap:10px}
+.visit .row b{font:700 clamp(8px,1.2vw,13px)/1 var(--body); color:#cfd6e4}
+.visit .row em{font:700 clamp(9px,1.4vw,15px)/1 var(--mono); color:#fff; font-style:normal}
+
+/* превью: калькулятор */
+.calc{background:#F6F7FB; height:100%; display:grid; grid-template-columns:1fr 1fr; gap:5%; padding:6%}
+.calc .f{display:flex; flex-direction:column; gap:9%}
+.calc .in{background:#fff; border:1px solid #DFE3EA; border-radius:7px; padding:5% 7%; display:grid; gap:4px}
+.calc .in i{height:4px; width:50%; border-radius:2px; background:#C8CED9}
+.calc .in b{font:500 clamp(8px,1.3vw,14px)/1 var(--mono); color:#1a1d24}
+.calc .res{background:#1a1d24; border-radius:10px; padding:9%; display:flex; flex-direction:column; justify-content:space-between; color:#fff}
+.calc .res small{font:500 clamp(7px,1vw,11px)/1 var(--mono); color:#9aa3b4; text-transform:uppercase; letter-spacing:.1em}
+.calc .res strong{font:800 clamp(14px,3vw,34px)/1 var(--display)}
+.calc .bar2{height:8px; border-radius:6px; background:#333a47; overflow:hidden}
+.calc .bar2 i{display:block; height:100%; width:62%; background:#3FD18A}
+.calc .meta{display:flex; justify-content:space-between; font:500 clamp(7px,1vw,11px)/1 var(--mono); color:#cfd6e4}
+
+.info{display:grid; gap:18px}
+.tagrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.tag{font:500 12px/1 var(--mono); padding:7px 10px; border-radius:7px; background:var(--chip); color:var(--ink)}
+.status{font:500 12px/1 var(--mono); padding:7px 10px; border-radius:7px; display:inline-flex; align-items:center; gap:7px}
+.status::before{content:""; width:8px; height:8px; border-radius:50%; background:currentColor}
+.status.live{color:#1F9D61; background:color-mix(in srgb,#1F9D61 14%,transparent)}
+.status.soon{color:var(--amber); background:color-mix(in srgb,var(--amber) 16%,transparent)}
+.info h3{font-size:clamp(22px,2.6vw,30px)}
+.info p{color:var(--muted)}
+.did{list-style:none; padding:0; margin:0; display:grid; gap:8px}
+.did li{padding-left:22px; position:relative}
+.did li::before{content:""; position:absolute; left:0; top:.62em; width:10px; height:2px; background:var(--accent)}
+.link{font:500 15px/1.3 var(--mono); color:var(--accent); text-decoration:none; word-break:break-all}
+.link:hover{text-decoration:underline}
+
+/* ---------- услуги ---------- */
+.services{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line)}
+@media (max-width:860px){ .services{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .services{grid-template-columns:1fr} }
+.svc{padding:28px 24px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:grid; gap:12px; align-content:start; min-width:0}
+.svc .ex{font:400 13px/1.4 var(--mono); color:var(--accent)}
+.svc p{color:var(--muted); font-size:16px}
+
+/* ---------- как работаем ---------- */
+.steps{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; counter-reset:s}
+@media (max-width:860px){ .steps{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:480px){ .steps{grid-template-columns:1fr} }
+.step{display:grid; gap:10px; align-content:start; min-width:0}
+.step::before{counter-increment:s; content:"0" counter(s); font:800 44px/1 var(--display); color:var(--accent)}
+.step p{color:var(--muted); font-size:16px}
+
+/* ---------- кто мы ---------- */
+.people{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+@media (max-width:720px){ .people{grid-template-columns:1fr} }
+.person{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:28px; display:grid; gap:14px; align-content:start; min-width:0}
+.person .av{width:56px; height:56px; border-radius:14px; display:grid; place-items:center; font:800 24px/1 var(--display); color:var(--accent-ink); background:var(--accent)}
+.person:nth-child(2) .av{background:var(--ink); color:var(--bg)}
+.person .role{font:500 13px/1.3 var(--mono); color:var(--accent); text-transform:uppercase; letter-spacing:.08em}
+.person p{color:var(--muted)}
+.person .tagrow{margin-top:4px}
+
+/* ---------- контакты ---------- */
+.contact{background:var(--accent); color:var(--accent-ink); border-radius:24px; padding:clamp(28px,5vw,56px); display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center}
+@media (max-width:760px){ .contact{grid-template-columns:1fr} }
+.contact h2{font-size:clamp(28px,4.4vw,48px)}
+.contact > div{min-width:0}
+.contact p{opacity:.85; margin-top:14px; max-width:44ch}
+.cards{display:grid; gap:10px}
+.cline{display:flex; justify-content:space-between; align-items:center; gap:12px; background:color-mix(in srgb,var(--accent-ink) 12%,transparent); border-radius:12px; padding:14px 16px; flex-wrap:wrap}
+.cline span{font:500 12px/1 var(--mono); text-transform:uppercase; letter-spacing:.1em; opacity:.8}
+.cline b{font:600 17px/1.2 var(--body); user-select:all; word-break:break-all}
+.copy{font:600 13px/1 var(--body); padding:8px 12px; border-radius:8px; border:0; background:var(--accent-ink); color:var(--accent); cursor:pointer}
+
+footer{padding-block:36px 48px; color:var(--muted); font-size:14px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){ .caret{animation:none} }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top"><span class="wins" aria-hidden="true"><i></i><i></i></span>Два окна</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#works">Работы</a>
+      <a href="#services">Что делаю</a>
+      <a href="#process">Как работаем</a>
+      <a href="#team">Кто мы</a>
+      <a href="#contact">Связаться</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="top">
+    <p class="eyebrow">Студия «Два окна» · сайты на заказ</p>
+    <h1>Сделаем сайт для <em>вашего дела</em></h1>
+    <p class="lead">Визитки, интернет-магазины и полезные онлайн-калькуляторы. Сайты удобно открываются с телефона, быстро грузятся и показывают клиенту главное: что вы продаёте, сколько стоит и как с вами связаться.</p>
+    <div class="addr" aria-label="Адресная строка">
+      <span class="lock" aria-hidden="true"></span>
+      <span class="typed" id="typed">https://<b>ваш-сайт.рф</b></span>
+      <span class="caret" aria-hidden="true"></span>
+    </div>
+    <p class="team">Нас двое: <b>Александр</b> и <b>Дмитрий</b></p>
+    <div class="cta">
+      <a class="btn primary" href="#contact">Обсудить сайт</a>
+      <a class="btn ghost" href="#works">Смотреть работы</a>
+    </div>
+  </div>
+
+  <section id="works">
+    <div class="sec-head">
+      <p class="eyebrow">Портфолио · 3 работы</p>
+      <h2>Что уже сделано</h2>
+      <p>Настоящие проекты, которые уже работают в интернете. Каждый можно открыть и посмотреть.</p>
+    </div>
+
+    <div class="works">
+
+      <article class="work">
+        <div class="browser">
+          <div class="bar"><div class="dots"><span></span><span></span><span></span></div><div class="url">avtoshinipro.ru/catalog.html</div></div>
+          <div class="screen" aria-hidden="true">
+            <div class="shop">
+              <div class="h"><div class="lg"></div><div class="srch"></div><div class="cart"></div></div>
+              <div class="tabs"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="grid">
+                <div class="card"><div class="tyre"></div><div class="ln"></div><div class="lbl"><i style="background:#3FB54A"></i><i style="background:#9BCB3B"></i><i style="background:#F2C230"></i></div><div class="ln p"></div></div>
+                <div class="card"><div class="tyre"></div><div class="ln"></div><div class="lbl"><i style="background:#9BCB3B"></i><i style="background:#3FB54A"></i><i style="background:#F2C230"></i></div><div class="ln p"></div></div>
+                <div class="card"><div class="tyre"></div><div class="ln"></div><div class="lbl"><i style="background:#F2C230"></i><i style="background:#9BCB3B"></i><i style="background:#3FB54A"></i></div><div class="ln p"></div></div>
+                <div class="card"><div class="tyre"></div><div class="ln"></div><div class="lbl"><i style="background:#3FB54A"></i><i style="background:#3FB54A"></i><i style="background:#9BCB3B"></i></div><div class="ln p"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tagrow"><span class="tag">Интернет-магазин</span><span class="status soon">Запускается</span></div>
+          <h3>Крым ШинТорг — магазин шин</h3>
+          <p>Большой каталог для шинного магазина в Симферополе: легковые, грузовые и мото шины, масла и аккумуляторы.</p>
+          <ul class="did">
+            <li>Товары и цены подтягиваются от поставщика автоматически</li>
+            <li>Евроэтикетка на каждой шине: топливо, сцепление на мокрой дороге, шум</li>
+            <li>Заявки приходят на почту и дублируются в мессенджер MAX</li>
+            <li>Сайт на своём домене и хостинге</li>
+          </ul>
+          <a class="link" href="https://avtoshinipro.ru/catalog.html" target="_blank" rel="noopener">avtoshinipro.ru ↗</a>
+        </div>
+      </article>
+
+      <article class="work">
+        <div class="browser">
+          <div class="bar"><div class="dots"><span></span><span></span><span></span></div><div class="url">lalcenkosasa-art.github.io/krym-shin-torg</div></div>
+          <div class="screen" aria-hidden="true">
+            <div class="visit">
+              <div class="t">Шины, которые <span>держат дорогу</span></div>
+              <div class="pill"></div>
+              <div class="row">
+                <div><b>Летние</b><em>от 2 800 ₽</em></div>
+                <div><b>Зимние</b><em>от 3 000 ₽</em></div>
+                <div><b>Всесезон</b><em>от 3 000 ₽</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tagrow"><span class="tag">Сайт-визитка</span><span class="status live">Работает</span></div>
+          <h3>Крым ШинТорг — визитка</h3>
+          <p>Одна страница, на которой клиент сразу видит цены, бренды и как доехать до магазина.</p>
+          <ul class="did">
+            <li>Цены по сезонам: летние, зимние, всесезонные</li>
+            <li>Список брендов: Pirelli, Yokohama, Hankook и другие</li>
+            <li>Адрес, часы работы, телефон и почта</li>
+            <li>Кнопка «Позвонить» для тех, кто зашёл с телефона</li>
+          </ul>
+          <a class="link" href="https://lalcenkosasa-art.github.io/krym-shin-torg/" target="_blank" rel="noopener">lalcenkosasa-art.github.io/krym-shin-torg ↗</a>
+        </div>
+      </article>
+
+      <article class="work">
+        <div class="browser">
+          <div class="bar"><div class="dots"><span></span><span></span><span></span></div><div class="url">lalcenkosasa-art.github.io/dolg</div></div>
+          <div class="screen" aria-hidden="true">
+            <div class="calc">
+              <div class="f">
+                <div class="in"><i></i><b>150 000 ₽</b></div>
+                <div class="in"><i></i><b>93 000 ₽</b></div>
+                <div class="in"><i></i><b>8 000 ₽</b></div>
+                <div class="in"><i></i><b>+ платёж</b></div>
+              </div>
+              <div class="res">
+                <small>Осталось отдать</small>
+                <strong>57 000 ₽</strong>
+                <div class="bar2"><i></i></div>
+                <div class="meta"><span>8 мес.</span><span>июнь 2027</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tagrow"><span class="tag">Калькулятор</span><span class="status live">Работает</span></div>
+          <h3>Калькулятор долга</h3>
+          <p>Простой инструмент: вводишь сумму долга и ежемесячный платёж, и видишь, сколько осталось и когда всё закроется.</p>
+          <ul class="did">
+            <li>Считает остаток и количество месяцев</li>
+            <li>Показывает примерную дату закрытия и последний платёж</li>
+            <li>Новые платежи добавляются одной кнопкой</li>
+            <li>Данные сохраняются на телефоне, регистрация не нужна</li>
+          </ul>
+          <a class="link" href="https://lalcenkosasa-art.github.io/dolg/" target="_blank" rel="noopener">lalcenkosasa-art.github.io/dolg ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="sec-head">
+      <p class="eyebrow">Услуги</p>
+      <h2>Что можем сделать для вас</h2>
+    </div>
+    <div class="services">
+      <div class="svc"><h3>Сайт-визитка</h3><p>Одна страница о вашем деле: услуги, цены, адрес, кнопка звонка. Подходит магазину, мастеру, салону.</p><span class="ex">пример: Крым ШинТорг</span></div>
+      <div class="svc"><h3>Интернет-магазин и каталог</h3><p>Товары с фото, ценами и фильтрами. Заявки приходят вам на почту или в мессенджер.</p><span class="ex">пример: avtoshinipro.ru</span></div>
+      <div class="svc"><h3>Калькуляторы и инструменты</h3><p>Расчёт стоимости, долга, доставки или чего угодно. Клиент считает сам, вы получаете готовую заявку.</p><span class="ex">пример: калькулятор долга</span></div>
+      <div class="svc"><h3>Новый сайт вместо старого</h3><p>Берём ваш устаревший сайт и делаем современный, с тем же ассортиментом и адресом.</p></div>
+      <div class="svc"><h3>Домен и хостинг</h3><p>Поможем купить адрес и разместить сайт, чтобы он открывался у всех и работал без перебоев.</p></div>
+      <div class="svc"><h3>Удобно с телефона</h3><p>Каждый сайт проверяем на телефоне. Большинство клиентов придёт именно оттуда.</p></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="sec-head">
+      <p class="eyebrow">Порядок работы</p>
+      <h2>Как мы сделаем ваш сайт</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Обсуждаем</h3><p>Рассказываете, чем занимаетесь и что должен уметь сайт. Можно показать сайты, которые нравятся.</p></div>
+      <div class="step"><h3>Первый вариант</h3><p>Делаем черновик сайта и присылаем ссылку, чтобы вы посмотрели его вживую.</p></div>
+      <div class="step"><h3>Правки</h3><p>Меняем тексты, цвета и разделы, пока результат вас не устроит.</p></div>
+      <div class="step"><h3>Запуск</h3><p>Размещаем сайт на вашем домене и показываем, как им пользоваться.</p></div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="sec-head">
+      <p class="eyebrow">Команда</p>
+      <h2>Кто мы</h2>
+      <p>Работаем вдвоём: один придумывает, как сайт будет выглядеть и что в нём будет, второй делает так, чтобы всё работало.</p>
+    </div>
+    <div class="people">
+      <div class="person">
+        <div class="av" aria-hidden="true">А</div>
+        <h3>Александр</h3>
+        <span class="role">Идеи и дизайн</span>
+        <p>Придумывает, каким будет сайт: что увидит клиент, какие разделы нужны, как всё будет выглядеть. Общается с заказчиком и следит, чтобы сайт решал его задачу.</p>
+        <div class="tagrow"><span class="tag">Идеи</span><span class="tag">Дизайн</span><span class="tag">Связь с клиентом</span></div>
+      </div>
+      <div class="person">
+        <div class="av" aria-hidden="true">Д</div>
+        <h3>Дмитрий</h3>
+        <span class="role">Программирование</span>
+        <p>Отвечает за код и логику: каталоги, подключение товаров от поставщиков, калькуляторы, заявки на почту и в мессенджеры. Делает так, чтобы сайт работал быстро и без ошибок.</p>
+        <div class="tagrow"><span class="tag">Код</span><span class="tag">Логика</span><span class="tag">Настройка сайта</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-top:0">
+    <div class="contact">
+      <div>
+        <h2>Нужен сайт? Напишите</h2>
+        <p>Позвоните или напишите в MAX. Расскажите в паре слов о своём деле, и мы ответим, как его лучше сделать и сколько это займёт.</p>
+      </div>
+      <div class="cards">
+        <div class="cline"><div><span>Звонки, СМС, MAX</span><br><b id="c-phone">+7 978 185-50-64</b></div><button class="copy" type="button" data-copy="c-phone">Копировать</button></div>
+        <div class="cline"><div><span>Почта</span><br><b id="c-mail">79781326028@mail.ru</b></div><button class="copy" type="button" data-copy="c-mail">Копировать</button></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Два окна · Александр и Дмитрий</span>
+    <a class="link" href="https://github.com/lalcenkosasa-art" target="_blank" rel="noopener">github.com/lalcenkosasa-art</a>
+  </footer>
+</div>
+
+<script>
+// адресная строка: перебирает примеры адресов
+(function(){
+  var el=document.getElementById('typed');
+  var names=['ваш-сайт.рф','шиномонтаж-крым.рф','салон-красоты.ru','автосервис.рф','ваш-магазин.ru'];
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i=0,pos=names[0].length,dir=-1;
+  function draw(){ el.innerHTML='https://<b>'+names[i].slice(0,pos)+'</b>'; }
+  function tick(){
+    var w=names[i];
+    if(dir<0){ pos--; if(pos<=0){dir=1;i=(i+1)%names.length;} }
+    else { pos++; if(pos>=names[i].length){draw(); dir=-1; return setTimeout(tick,1800);} }
+    draw(); setTimeout(tick, dir<0?45:85);
+  }
+  setTimeout(tick,2200);
+})();
+// копирование контактов
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.copy);
+    var done=function(){b.textContent='Скопировано'; setTimeout(function(){b.textContent='Копировать'},1500)};
+    var sel=function(){var r=document.createRange(); r.selectNodeContents(t); var s=getSelection(); s.removeAllRanges(); s.addRange(r);};
+    try{ navigator.clipboard.writeText(t.textContent).then(done,sel); }catch(e){ sel(); }
+  });
+});
+</script>
