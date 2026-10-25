@@ -382,6 +382,9 @@ textarea{resize:vertical}
 .send-status{font-weight:600; min-height:1.4em}
 .send-status.ok{color:#1F9D61}
 .send-status.err{color:#D7262E}
+.send-status .why{display:block; margin-top:6px; font-weight:400; font-size:13px; color:var(--muted)}
+.send-status .fb-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.send-status .fb-row .btn{color:var(--ink)}
 .btn:disabled{opacity:.6; cursor:default}
 
 /* ---------- отзывы ---------- */
@@ -1076,6 +1079,36 @@ textarea{resize:vertical}
   }
   setTimeout(tick,2200);
 })();
+// отправка форм: общий помощник и запасной способ
+function sendForm(url,body){
+  var ctrl=window.AbortController?new AbortController():null, timer=setTimeout(function(){ if(ctrl) ctrl.abort(); },15000);
+  return fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body),signal:ctrl?ctrl.signal:undefined})
+  .then(function(r){ return r.text().then(function(t){
+    var d=null; try{ d=JSON.parse(t); }catch(e){}
+    if(d && (d.ok===true || String(d.success)==='true')) return d;
+    var m=(d && d.message) ? String(d.message) : ('сервер ответил кодом '+r.status);
+    if(/activat/i.test(m)) m='форма ещё не активирована, нужно подтвердить почту в письме от FormSubmit';
+    throw new Error(m);
+  }); }, function(e){
+    if(e && e.name==='AbortError') throw new Error('сервис отправки не ответил за 15 секунд');
+    throw new Error('нет связи с сервисом отправки (возможно, мешает VPN или блокировщик рекламы)');
+  })
+  .then(function(d){ clearTimeout(timer); return d; }, function(e){ clearTimeout(timer); throw e; });
+}
+function sendFallback(st,msg,why,subject,text,noCopy){
+  st.className='send-status err'; st.textContent='';
+  var m=document.createElement('span'); m.textContent=msg; st.appendChild(m);
+  var w=document.createElement('small'); w.className='why'; w.textContent='Причина: '+why; st.appendChild(w);
+  var row=document.createElement('span'); row.className='fb-row';
+  var a=document.createElement('a'); a.className='btn ghost sm'; a.textContent='Отправить письмом';
+  a.href='mailto:79781326028@mail.ru?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
+  var c=document.createElement('button'); c.type='button'; c.className='btn ghost sm'; c.textContent='Скопировать текст';
+  c.addEventListener('click',function(){
+    var done=function(){ c.textContent='Скопировано, вставьте в MAX'; };
+    try{ navigator.clipboard.writeText(text).then(done,function(){ c.textContent='Не удалось скопировать'; }); }catch(e){ c.textContent='Не удалось скопировать'; }
+  });
+  row.appendChild(a); if(!noCopy) row.appendChild(c); st.appendChild(row);
+}
 // страницы
 (function(){
   var alias={top:'home',contact:'brief',faq:'brief',process:'about',team:'about',reviews:'home'};
@@ -1126,12 +1159,11 @@ textarea{resize:vertical}
     if(text.length<10){status('Напишите хотя бы пару предложений о работе с нами.','err'); document.getElementById('rv-text').focus(); return;}
     btn.disabled=true; btn.textContent='Отправляем…'; status('');
     var ok=false;
-    fetch('https://formsubmit.co/ajax/79781326028@mail.ru',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({_subject:'Новый отзыв на сайте «Два окна»',_template:'table','Имя':name,'Что делали':about||'—','Оценка':rating+' из 5','Отзыв':text,
-        'Строка для сайта':"{name:'"+name.replace(/'/g,'’')+"', about:'"+about.replace(/'/g,'’')+"', rating:"+rating+", date:'"+new Date().toISOString().slice(0,10)+"', text:'"+text.replace(/'/g,'’').replace(/\n+/g,' ')+"'},"})})
-    .then(function(r){return r.json()})
-    .then(function(d){ if(String(d.success)!=='true') throw new Error('fail'); ok=true; form.reset(); rating=5; paint(); status('Спасибо за отзыв! Он появится на сайте после проверки.','ok'); })
-    .catch(function(){ status('Не получилось отправить. Попробуйте ещё раз или пришлите отзыв в MAX: +7 978 185-50-64.','err'); })
+    var plain='Отзыв для сайта «Два окна»\nИмя: '+name+'\nЧто делали: '+(about||'—')+'\nОценка: '+rating+' из 5\n\n'+text;
+    sendForm('https://formsubmit.co/ajax/79781326028@mail.ru',{_subject:'Новый отзыв на сайте «Два окна»',_template:'table','Имя':name,'Что делали':about||'—','Оценка':rating+' из 5','Отзыв':text,
+        'Строка для сайта':"{name:'"+name.replace(/'/g,'’')+"', about:'"+about.replace(/'/g,'’')+"', rating:"+rating+", date:'"+new Date().toISOString().slice(0,10)+"', text:'"+text.replace(/'/g,'’').replace(/\n+/g,' ')+"'},"})
+    .then(function(){ ok=true; form.reset(); rating=5; paint(); status('Спасибо за отзыв! Он появится на сайте после проверки.','ok'); })
+    .catch(function(e){ sendFallback(st,'Не получилось отправить автоматически. Отправьте отзыв письмом или скопируйте и пришлите в MAX: +7 978 185-50-64.',e.message,'Отзыв для сайта «Два окна»',plain); })
     .then(function(){ btn.disabled=false; btn.textContent='Отправить отзыв'; });
   });
 })();
@@ -1234,10 +1266,9 @@ function toggleGroup(box,multi,cb){
     var ok=false;
     var url=SEND_URL||'https://formsubmit.co/ajax/79781326028@mail.ru';
     var body=SEND_URL?{phone:phone.value.trim(),text:text()}:{_subject:'Заявка на сайт: «Два окна»',_template:'table','Телефон / MAX':phone.value.trim(),'Заявка':text(),'Страница':location.href};
-    fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)})
-    .then(function(r){return r.json()})
-    .then(function(d){ if(!(d.ok===true||String(d.success)==='true')) throw new Error('fail'); ok=true; status('Заявка отправлена. Мы свяжемся с вами в ближайшее время.','ok'); send.textContent='Отправлено'; })
-    .catch(function(){ status('Не получилось отправить. Скопируйте текст и пришлите его в MAX по номеру +7 978 185-50-64.','err'); })
+    sendForm(url,body)
+    .then(function(){ ok=true; status('Заявка отправлена. Мы свяжемся с вами в ближайшее время.','ok'); send.textContent='Отправлено'; })
+    .catch(function(e){ sendFallback(st,'Не получилось отправить автоматически. Отправьте заявку письмом или скопируйте и пришлите в MAX: +7 978 185-50-64.',e.message,'Заявка на сайт: «Два окна»',text(),true); })
     .then(function(){ if(!ok){send.disabled=false; send.textContent='Отправить заявку';} });
   });
   var cp=document.getElementById('b-copy');
