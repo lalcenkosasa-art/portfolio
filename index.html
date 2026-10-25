@@ -384,6 +384,33 @@ textarea{resize:vertical}
 .send-status.err{color:#D7262E}
 .btn:disabled{opacity:.6; cursor:default}
 
+/* ---------- отзывы ---------- */
+.reviews{border-top:1px solid var(--line)}
+.rv-layout{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:24px; align-items:start}
+@media (max-width:860px){ .rv-layout{grid-template-columns:minmax(0,1fr)} }
+.rv-list{display:grid; gap:14px; min-width:0}
+.rv-card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px; display:grid; gap:12px; min-width:0}
+.rv-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap}
+.rv-who{display:flex; gap:12px; align-items:center; min-width:0}
+.rv-av{width:44px; height:44px; flex:none; border-radius:12px; background:var(--chip); color:var(--accent); display:grid; place-items:center; font:800 18px/1 var(--display)}
+.rv-who > div{min-width:0}
+.rv-who b{display:block; font-size:16px}
+.rv-who > div span{display:block; font-size:14px; color:var(--muted); overflow-wrap:anywhere}
+.rv-stars{color:#F5A623; letter-spacing:2px; font-size:17px; white-space:nowrap}
+.rv-stars i{font-style:normal; color:var(--line)}
+.rv-card p{color:var(--ink); overflow-wrap:anywhere; white-space:pre-line}
+.rv-date{font:400 13px/1 var(--mono); color:var(--muted)}
+.rv-empty{background:var(--surface); border:1px dashed var(--line); border-radius:18px; padding:clamp(24px,4vw,36px); display:grid; gap:10px; justify-items:start}
+.rv-empty h3{font-size:22px}
+.rv-empty p{color:var(--muted); max-width:46ch}
+.rv-avg{font:800 clamp(30px,4vw,40px)/1 var(--display); color:var(--ink)}
+.rv-form{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:clamp(18px,3vw,28px); display:grid; gap:14px; min-width:0}
+.rv-form h3{font-size:22px}
+.stars-in{display:flex; gap:4px}
+.stars-in button{width:44px; height:44px; border:0; background:transparent; font-size:30px; line-height:1; color:var(--line); cursor:pointer; padding:0; border-radius:8px}
+.stars-in button.on{color:#F5A623}
+.foot-links{display:flex; gap:18px; flex-wrap:wrap}
+
 /* ---------- телефон ---------- */
 @media (max-width:560px){
   body{font-size:16px}
@@ -475,7 +502,6 @@ textarea{resize:vertical}
       <span class="typed" id="typed">https://<b>ваш-сайт.рф</b></span>
       <span class="caret" aria-hidden="true"></span>
     </div>
-    <p class="team">Нас двое: <b>Александр</b> и <b>Дмитрий</b></p>
     <div class="cta">
       <a class="btn primary" href="#contact">Обсудить сайт</a>
       <a class="btn ghost" href="#works">Смотреть работы</a>
@@ -483,12 +509,12 @@ textarea{resize:vertical}
   </div>
   <div class="promo">
     <div class="promo-text">
-      <p class="eyebrow">Акция для первых клиентов</p>
-      <h2>Скидка 20% на первый сайт</h2>
-      <p>Мы набираем портфолио, поэтому первым трём заказчикам делаем сайт дешевле.</p>
+      <p class="eyebrow">Акция</p>
+      <h2>Скидка 20% до 25.12.2026</h2>
+      <p>Закажите сайт до 25 декабря 2026 года и получите скидку 20% на любую услугу.</p>
       <a class="btn primary" href="#brief">Занять место</a>
     </div>
-    <div class="promo-tag"><strong>−20%</strong><span>осталось 3 места</span></div>
+    <div class="promo-tag"><strong>−20%</strong><span>до 25.12.2026</span></div>
   </div>
   <section class="hub">
     <div class="sec-head">
@@ -767,7 +793,7 @@ textarea{resize:vertical}
       <nav class="crumbs" aria-label="Путь"><a href="#home">Главная</a><span aria-hidden="true">/</span><span>О нас</span></nav>
       <p class="eyebrow">Команда</p>
       <h1>Кто мы</h1>
-      <p class="lead">Работаем вдвоём: один придумывает, как сайт будет выглядеть и что в нём будет, второй делает так, чтобы всё работало.</p>
+      <p class="lead">Александр отвечает за идеи и дизайн, Дмитрий за программирование. Каждый проект ведём от первой идеи до запуска и поддержки.</p>
     </div>
     <div class="people">
       <div class="person">
@@ -825,7 +851,7 @@ textarea{resize:vertical}
               <button type="button" class="chipb" data-v="Калькулятор" aria-pressed="false">Калькулятор</button>
               <button type="button" class="chipb" data-v="Другое" aria-pressed="false">Другое</button>
             </div></div>
-          <label class="promo-check"><input type="checkbox" id="b-promo"> Хочу скидку 20% по акции для первых клиентов</label>
+          <label class="promo-check"><input type="checkbox" id="b-promo"> Хочу скидку 20% по акции (до 25.12.2026)</label>
           <div class="fld"><label for="b-note">Комментарий</label><textarea id="b-note" rows="3" placeholder="Что ещё важно знать"></textarea></div>
         </form>
         <div class="brief-out">
@@ -1004,9 +1030,33 @@ textarea{resize:vertical}
 </div>
 </main>
 
+  <section class="reviews" id="reviews" aria-labelledby="rv-title">
+    <div class="sec-head">
+      <p class="eyebrow">Отзывы</p>
+      <h2 id="rv-title">Что говорят клиенты</h2>
+      <p id="rv-summary">Отзывы появляются на сайте после проверки, чтобы здесь не было спама.</p>
+    </div>
+    <div class="rv-layout">
+      <div class="rv-list" id="rv-list" aria-live="polite"></div>
+      <form class="rv-form" id="rvForm" novalidate>
+        <h3>Оставить отзыв</h3>
+        <div class="fld"><label for="rv-name">Ваше имя</label><input type="text" id="rv-name" autocomplete="name" maxlength="60" placeholder="Например, Ирина"></div>
+        <div class="fld"><label for="rv-about">Что мы для вас делали</label><input type="text" id="rv-about" maxlength="80" placeholder="Например, сайт для салона красоты"></div>
+        <div class="fld"><span class="lb" id="rv-rate-lb">Оценка</span>
+          <div class="stars-in" id="rv-stars" role="radiogroup" aria-labelledby="rv-rate-lb">
+            <button type="button" role="radio" data-v="1" aria-label="1 из 5" aria-checked="false">★</button><button type="button" role="radio" data-v="2" aria-label="2 из 5" aria-checked="false">★</button><button type="button" role="radio" data-v="3" aria-label="3 из 5" aria-checked="false">★</button><button type="button" role="radio" data-v="4" aria-label="4 из 5" aria-checked="false">★</button><button type="button" role="radio" data-v="5" aria-label="5 из 5" aria-checked="true">★</button>
+          </div></div>
+        <div class="fld"><label for="rv-text">Отзыв</label><textarea id="rv-text" rows="4" maxlength="1500" placeholder="Как прошла работа, что понравилось, что можно улучшить"></textarea></div>
+        <input type="text" id="rv-honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn primary" type="submit" id="rv-send">Отправить отзыв</button>
+        <p class="send-status" id="rv-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
   <footer>
     <span>© 2026 Два окна · Два окна — один результат</span>
-    <a class="link" href="https://github.com/lalcenkosasa-art" target="_blank" rel="noopener">github.com/lalcenkosasa-art</a>
+    <span class="foot-links"><a class="link" href="#reviews">Отзывы</a><a class="link" href="https://github.com/lalcenkosasa-art" target="_blank" rel="noopener">github.com/lalcenkosasa-art</a></span>
   </footer>
 </div>
 
@@ -1028,7 +1078,7 @@ textarea{resize:vertical}
 })();
 // страницы
 (function(){
-  var alias={top:'home',contact:'brief',faq:'brief',process:'about',team:'about'};
+  var alias={top:'home',contact:'brief',faq:'brief',process:'about',team:'about',reviews:'home'};
   var navOf={shop:'works',visitka:'works',dolg:'works'};
   var names={shop:'Магазин шин · Два окна',visitka:'Сайт-визитка · Два окна',dolg:'Калькулятор долга · Два окна',home:'Два окна',works:'Работы · Два окна',demo:'Примеры · Два окна',services:'Услуги · Два окна',about:'О нас · Два окна',brief:'Заявка · Два окна'};
   function show(){
@@ -1041,6 +1091,49 @@ textarea{resize:vertical}
     if(target && h!=='top'){ target.scrollIntoView(); } else { window.scrollTo(0,0); }
   }
   window.addEventListener('hashchange',show); show();
+})();
+// отзывы
+(function(){
+  // Отзывы, которые показываются на сайте. Чтобы добавить отзыв, скопируйте пример ниже,
+  // уберите // в начале строки и впишите данные из письма. Новые отзывы ставьте сверху.
+  // {name:'Ирина', about:'Сайт для салона красоты', rating:5, date:'2026-11-02', text:'Текст отзыва'},
+  var REVIEWS=[
+  ];
+  var list=document.getElementById('rv-list'), sum=document.getElementById('rv-summary');
+  function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+  function stars(n){n=Math.max(1,Math.min(5,Math.round(n||5))); return '<span class="rv-stars" aria-label="Оценка '+n+' из 5">'+'★'.repeat(n)+'<i>'+'★'.repeat(5-n)+'</i></span>';}
+  function fmt(d){var x=new Date(d); return isNaN(x)?'':x.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});}
+  if(!REVIEWS.length){
+    list.innerHTML='<div class="rv-empty"><h3>Отзывов пока нет</h3><p>Мы только начинаем. Если мы уже делали для вас сайт, расскажите, как прошла работа: ваш отзыв будет здесь первым.</p></div>';
+  } else {
+    var avg=REVIEWS.reduce(function(a,r){return a+(+r.rating||5)},0)/REVIEWS.length;
+    sum.innerHTML='<span class="rv-avg">'+avg.toFixed(1).replace('.',',')+'</span> '+stars(avg)+' · '+REVIEWS.length+' '+(REVIEWS.length%10===1&&REVIEWS.length%100!==11?'отзыв':(REVIEWS.length%10>=2&&REVIEWS.length%10<=4&&(REVIEWS.length%100<10||REVIEWS.length%100>=20)?'отзыва':'отзывов'));
+    list.innerHTML=REVIEWS.map(function(r){
+      return '<article class="rv-card"><div class="rv-top"><div class="rv-who"><span class="rv-av" aria-hidden="true">'+esc((r.name||'?').trim().charAt(0).toUpperCase())+'</span><div><b>'+esc(r.name)+'</b>'+(r.about?'<span>'+esc(r.about)+'</span>':'')+'</div></div>'+stars(r.rating)+'</div><p>'+esc(r.text)+'</p>'+(r.date?'<span class="rv-date">'+fmt(r.date)+'</span>':'')+'</article>';
+    }).join('');
+  }
+  // форма
+  var form=document.getElementById('rvForm'), box=document.getElementById('rv-stars'), st=document.getElementById('rv-status'), btn=document.getElementById('rv-send'), rating=5;
+  function paint(){[].forEach.call(box.querySelectorAll('button'),function(b){var v=+b.dataset.v; b.classList.toggle('on',v<=rating); b.setAttribute('aria-checked',v===rating);});}
+  box.addEventListener('click',function(e){var b=e.target.closest('button'); if(!b) return; rating=+b.dataset.v; paint();});
+  paint();
+  function status(t,k){st.textContent=t; st.className='send-status'+(k?' '+k:'');}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(document.getElementById('rv-honey').value) return;
+    var name=document.getElementById('rv-name').value.trim(), about=document.getElementById('rv-about').value.trim(), text=document.getElementById('rv-text').value.trim();
+    if(!name){status('Напишите, как вас зовут.','err'); document.getElementById('rv-name').focus(); return;}
+    if(text.length<10){status('Напишите хотя бы пару предложений о работе с нами.','err'); document.getElementById('rv-text').focus(); return;}
+    btn.disabled=true; btn.textContent='Отправляем…'; status('');
+    var ok=false;
+    fetch('https://formsubmit.co/ajax/79781326028@mail.ru',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({_subject:'Новый отзыв на сайте «Два окна»',_template:'table','Имя':name,'Что делали':about||'—','Оценка':rating+' из 5','Отзыв':text,
+        'Строка для сайта':"{name:'"+name.replace(/'/g,'’')+"', about:'"+about.replace(/'/g,'’')+"', rating:"+rating+", date:'"+new Date().toISOString().slice(0,10)+"', text:'"+text.replace(/'/g,'’').replace(/\n+/g,' ')+"'},"})})
+    .then(function(r){return r.json()})
+    .then(function(d){ if(String(d.success)!=='true') throw new Error('fail'); ok=true; form.reset(); rating=5; paint(); status('Спасибо за отзыв! Он появится на сайте после проверки.','ok'); })
+    .catch(function(){ status('Не получилось отправить. Попробуйте ещё раз или пришлите отзыв в MAX: +7 978 185-50-64.','err'); })
+    .then(function(){ btn.disabled=false; btn.textContent='Отправить отзыв'; });
+  });
 })();
 // тема
 (function(){
@@ -1124,7 +1217,7 @@ function toggleGroup(box,multi,cb){
     if(name) l.push('Моё дело: '+name);
     l.push('Что нужно: '+type);
     if(note) l.push('Комментарий: '+note);
-    if(document.getElementById('b-promo').checked) l.push('Хочу скидку 20% по акции для первых клиентов');
+    if(document.getElementById('b-promo').checked) l.push('Хочу скидку 20% по акции (до 25.12.2026)');
     return l.join('\n');
   }
   function draw(){var t=text(); out.textContent=t; mail.href='mailto:79781326028@mail.ru?subject='+encodeURIComponent('Заявка на сайт')+'&body='+encodeURIComponent(t);}
