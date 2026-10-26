@@ -142,6 +142,27 @@ section{padding-block:72px; border-top:1px solid var(--line)}
 .visit .row b{font:700 clamp(8px,1.2vw,13px)/1 var(--body); color:#cfd6e4}
 .visit .row em{font:700 clamp(9px,1.4vw,15px)/1 var(--mono); color:#fff; font-style:normal}
 
+/* превью: шары */
+.balloon{background:#FFF8FB; height:100%; display:flex; flex-direction:column; color:#2A1730}
+.balloon .bl-top{display:flex; justify-content:space-between; align-items:center; padding:4% 6% 2%}
+.balloon .bl-logo{width:18%; height:12px; border-radius:6px; background:#E2457F}
+.balloon .bl-nav{display:flex; gap:6px}
+.balloon .bl-nav i{width:26px; height:6px; border-radius:3px; background:#F1D3E0}
+.balloon .bl-hero{flex:1; display:grid; grid-template-columns:1.2fr 1fr; align-items:center; padding:0 6%; gap:4%}
+.balloon .bl-t{font:800 clamp(11px,2vw,21px)/1.12 var(--display); max-width:12ch}
+.balloon .bl-t span{color:#E2457F}
+.balloon .bl-btns{display:flex; gap:6px; margin-top:10%}
+.balloon .bl-btns span{height:clamp(10px,1.6vw,18px); border-radius:20px; width:38%}
+.balloon .b1{background:#E2457F} .balloon .b2{background:#4C6FFF}
+.balloon .bl-art{position:relative; height:100%; min-height:90px}
+.balloon .bl-art i{position:absolute; border-radius:50% 50% 48% 48%; width:34%; aspect-ratio:.86}
+.balloon .bl-art i:after{content:""; position:absolute; left:50%; top:100%; width:1px; height:60%; background:#CBB6C4}
+.balloon .c1{left:4%; top:14%; background:#E2457F} .balloon .c2{left:34%; top:2%; background:#FFC93C}
+.balloon .c3{left:62%; top:16%; background:#4C6FFF} .balloon .c4{left:32%; top:38%; background:#38C6A8}
+.balloon .bl-row{display:grid; grid-template-columns:repeat(3,1fr); gap:4%; padding:3% 6% 5%}
+.balloon .bl-row div{background:#fff; border:1px solid #F1D3E0; border-radius:8px; padding:6% 7%}
+.balloon .bl-row b{font:700 clamp(8px,1.2vw,13px)/1 var(--body)}
+
 /* превью: калькулятор */
 .calc{background:#F6F7FB; height:100%; display:grid; grid-template-columns:1fr 1fr; gap:5%; padding:6%}
 .calc .f{display:flex; flex-direction:column; gap:9%}
@@ -531,7 +552,7 @@ textarea{resize:vertical}
       <h2>Выберите, что посмотреть</h2>
     </div>
     <div class="hub-grid">
-      <a class="hub-card" href="#works"><span class="eyebrow">3 проекта</span><h3>Работы</h3><p>Магазин шин, сайт-визитка и калькулятор. Какая была задача и что внутри.</p><span class="go">Открыть →</span></a>
+      <a class="hub-card" href="#works"><span class="eyebrow">4 проекта</span><h3>Работы</h3><p>Магазин шин, две визитки и калькулятор. Какая была задача и что внутри.</p><span class="go">Открыть →</span></a>
       <a class="hub-card" href="#demo"><span class="eyebrow">Можно потрогать</span><h3>Примеры</h3><p>Каталог с фильтром, калькулятор и подбор дизайна прямо на сайте.</p><span class="go">Открыть →</span></a>
       <a class="hub-card" href="#services"><span class="eyebrow">6 услуг</span><h3>Услуги</h3><p>Визитки, магазины, калькуляторы. Что входит в каждую работу.</p><span class="go">Открыть →</span></a>
       <a class="hub-card" href="#about"><span class="eyebrow">Александр и Дмитрий</span><h3>О нас</h3><p>Кто делает ваш сайт и по какому порядку мы работаем.</p><span class="go">Открыть →</span></a>
@@ -545,7 +566,7 @@ textarea{resize:vertical}
   <section>
     <div class="page-head">
       <nav class="crumbs" aria-label="Путь"><a href="#home">Главная</a><span aria-hidden="true">/</span><span>Работы</span></nav>
-      <p class="eyebrow">Портфолио · 3 работы</p>
+      <p class="eyebrow">Портфолио · 4 работы</p>
       <h1>Наши работы</h1>
       <p class="lead">Настоящие проекты, которые уже работают в интернете. По каждому рассказываем, какая была задача и что у него внутри.</p>
     </div>
@@ -618,6 +639,39 @@ textarea{resize:vertical}
           </div>
           <div class="work-links"><a class="btn primary sm" href="#visitka">Подробнее о проекте</a>
 <a class="link" href="https://lalcenkosasa-art.github.io/krym-shin-torg/" target="_blank" rel="noopener">lalcenkosasa-art.github.io/krym-shin-torg ↗</a></div>
+        </div>
+      </article>
+
+      <article class="work">
+        <div class="browser">
+          <div class="bar"><div class="dots"><span></span><span></span><span></span></div><div class="url">lalcenkosasa-art.github.io/vizitka.shariki</div></div>
+          <div class="screen" aria-hidden="true">
+            <div class="balloon">
+              <div class="bl-top"><span class="bl-logo"></span><span class="bl-nav"><i></i><i></i><i></i></span></div>
+              <div class="bl-hero">
+                <div class="bl-text"><div class="bl-t">Шары и оформление <span>праздников</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
+                <div class="bl-art"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              </div>
+              <div class="bl-row"><div><b>Букеты</b></div><div><b>Праздники</b></div><div><b>С логотипом</b></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tagrow"><span class="tag">Сайт-визитка</span><span class="status live">Работает</span></div>
+          <h3>Крым Шар — визитка</h3>
+          <p>Сайт для магазина воздушных шаров в Симферополе: что можно заказать, под какой праздник и как связаться.</p>
+          <ul class="did">
+            <li>Каталог: букеты из шаров, подарки, оформление праздников</li>
+            <li>Поводы: свадьбы, выписка из роддома, детские праздники и другие</li>
+            <li>Шары с логотипом для бизнеса</li>
+            <li>Кнопки «Позвонить» и «Написать ВКонтакте», адрес и карта</li>
+          </ul>
+          <div class="facts">
+            <div><span class="lb">Задача</span><p>Собрать на одной понятной странице всё, что предлагает магазин, и сделать так, чтобы с телефона было легко позвонить или написать.</p></div>
+            <div><span class="lb">Что внутри</span><div class="tagrow"><span class="tag">Одна страница</span><span class="tag">Кнопка звонка</span><span class="tag">ВКонтакте</span><span class="tag">Карта</span></div></div>
+          </div>
+          <div class="work-links"><a class="btn primary sm" href="#shariki">Подробнее о проекте</a>
+<a class="link" href="https://lalcenkosasa-art.github.io/vizitka.shariki/" target="_blank" rel="noopener">lalcenkosasa-art.github.io/vizitka.shariki ↗</a></div>
         </div>
       </article>
 
@@ -957,6 +1011,44 @@ textarea{resize:vertical}
     <div class="cta"><a class="btn primary" href="https://lalcenkosasa-art.github.io/krym-shin-torg/" target="_blank" rel="noopener">Открыть сайт ↗</a><a class="btn ghost" href="#works">Все работы</a></div>
     <nav class="case-nav" aria-label="Другие работы">
       <a href="#shop"><span class="lb">Предыдущая работа</span><b>← Магазин шин</b></a>
+      <a href="#shariki" class="r"><span class="lb">Следующая работа</span><b>Крым Шар →</b></a>
+    </nav>
+    <div class="next">
+      <div><h2>Хотите такой же сайт?</h2><p>Соберите заявку за минуту, и мы ответим.</p></div>
+      <a class="btn primary" href="#brief">Оставить заявку</a>
+    </div>
+  </section>
+</div>
+<div class="view" id="v-shariki" hidden>
+  <section>
+    <div class="page-head">
+      <nav class="crumbs" aria-label="Путь"><a href="#home">Главная</a><span aria-hidden="true">/</span><a href="#works">Работы</a><span aria-hidden="true">/</span><span>Крым Шар</span></nav>
+      <p class="eyebrow">Сайт-визитка · работает</p>
+      <h1>Крым Шар: сайт-визитка</h1>
+      <p class="lead">Магазин гелиевых шаров и оформления праздников в Симферополе. Работает с 2006 года, доставляет по всему Крыму.</p>
+    </div>
+    <div class="case-browser">
+        <div class="browser">
+          <div class="bar"><div class="dots"><span></span><span></span><span></span></div><div class="url">lalcenkosasa-art.github.io/vizitka.shariki</div></div>
+          <div class="screen" aria-hidden="true">
+            <div class="balloon">
+              <div class="bl-top"><span class="bl-logo"></span><span class="bl-nav"><i></i><i></i><i></i></span></div>
+              <div class="bl-hero">
+                <div class="bl-text"><div class="bl-t">Шары и оформление <span>праздников</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
+                <div class="bl-art"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              </div>
+              <div class="bl-row"><div><b>Букеты</b></div><div><b>Праздники</b></div><div><b>С логотипом</b></div></div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <dl class="case-meta"><div><dt>Клиент</dt><dd>Крым Шар, Симферополь</dd></div><div><dt>Тип</dt><dd>Сайт-визитка</dd></div><div><dt>Адрес</dt><dd>github.io/vizitka.shariki</dd></div><div><dt>Статус</dt><dd>Работает</dd></div></dl>
+    <div class="case-block"><h2>Задача</h2><p>Собрать на одной странице всё, что предлагает магазин: букеты, подарки, оформление праздников и шары с логотипом. И сделать так, чтобы с телефона было легко позвонить или написать.</p></div>
+    <div class="case-block"><h2>Что сделали</h2><ul class="did"><li>Первый экран с кнопками «Позвонить» и «Написать ВКонтакте»</li><li>Блок «Что можно заказать»: букеты, подарки, оформление</li><li>Поводы: свадьбы, выписка из роддома, детские праздники, юбилеи, выпускные, открытия</li><li>Раздел для бизнеса: печать логотипа на шарах</li><li>Подсказка «Сколько держится шар» и советы по хранению</li><li>«Три шага до праздника», контакты, адрес и карта</li></ul></div>
+    <div class="case-block"><h2>Что внутри</h2><div class="tagrow"><span class="tag">Одна страница</span><span class="tag">Кнопка звонка</span><span class="tag">ВКонтакте</span><span class="tag">Карта</span><span class="tag">Под телефон</span><span class="tag">GitHub Pages</span></div></div>
+    <div class="cta"><a class="btn primary" href="https://lalcenkosasa-art.github.io/vizitka.shariki/" target="_blank" rel="noopener">Открыть сайт ↗</a><a class="btn ghost" href="#works">Все работы</a></div>
+    <nav class="case-nav" aria-label="Другие работы">
+      <a href="#visitka"><span class="lb">Предыдущая работа</span><b>← Сайт-визитка шин</b></a>
       <a href="#dolg" class="r"><span class="lb">Следующая работа</span><b>Калькулятор долга →</b></a>
     </nav>
     <div class="next">
@@ -1004,7 +1096,7 @@ textarea{resize:vertical}
     <div class="case-block"><h2>Что внутри</h2><div class="tagrow"><span class="tag">Расчёты</span><span class="tag">Сохранение на телефоне</span><span class="tag">Без регистрации</span><span class="tag">GitHub Pages</span></div></div>
     <div class="cta"><a class="btn primary" href="https://lalcenkosasa-art.github.io/dolg/" target="_blank" rel="noopener">Открыть сайт ↗</a><a class="btn ghost" href="#works">Все работы</a></div>
     <nav class="case-nav" aria-label="Другие работы">
-      <a href="#visitka"><span class="lb">Предыдущая работа</span><b>← Сайт-визитка</b></a>
+      <a href="#shariki"><span class="lb">Предыдущая работа</span><b>← Крым Шар</b></a>
       <a href="#shop" class="r"><span class="lb">Следующая работа</span><b>Магазин шин →</b></a>
     </nav>
     <div class="next">
@@ -1056,8 +1148,8 @@ textarea{resize:vertical}
 // страницы
 (function(){
   var alias={top:'home',contact:'brief',faq:'brief',process:'about',team:'about',reviews:'home'};
-  var navOf={shop:'works',visitka:'works',dolg:'works'};
-  var names={shop:'Магазин шин · Два окна',visitka:'Сайт-визитка · Два окна',dolg:'Калькулятор долга · Два окна',home:'Два окна',works:'Работы · Два окна',demo:'Примеры · Два окна',services:'Услуги · Два окна',about:'О нас · Два окна',brief:'Заявка · Два окна'};
+  var navOf={shop:'works',visitka:'works',shariki:'works',dolg:'works'};
+  var names={shop:'Магазин шин · Два окна',visitka:'Сайт-визитка · Два окна',shariki:'Крым Шар · Два окна',dolg:'Калькулятор долга · Два окна',home:'Два окна',works:'Работы · Два окна',demo:'Примеры · Два окна',services:'Услуги · Два окна',about:'О нас · Два окна',brief:'Заявка · Два окна'};
   function show(){
     var h=(location.hash||'').slice(1)||'home', id=alias[h]||h;
     var v=document.getElementById('v-'+id); if(!v){id='home'; v=document.getElementById('v-home');}
