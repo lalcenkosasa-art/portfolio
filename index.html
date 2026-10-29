@@ -143,24 +143,25 @@ section{padding-block:72px; border-top:1px solid var(--line)}
 .visit .row em{font:700 clamp(9px,1.4vw,15px)/1 var(--mono); color:#fff; font-style:normal}
 
 /* превью: шары */
-.balloon{background:#FFF8FB; height:100%; display:flex; flex-direction:column; color:#2A1730}
-.balloon .bl-top{display:flex; justify-content:space-between; align-items:center; padding:4% 6% 2%}
-.balloon .bl-logo{width:18%; height:12px; border-radius:6px; background:#E2457F}
+.balloon{background:#1A0B14; height:100%; display:flex; flex-direction:column; color:#fff}
+.balloon .bl-top{display:flex; justify-content:space-between; align-items:center; padding:3% 6%; border-bottom:2px solid #FF3D8B}
+.balloon .bl-logo{width:20%; height:10px; border-radius:6px; background:#FF3D8B}
 .balloon .bl-nav{display:flex; gap:6px}
-.balloon .bl-nav i{width:26px; height:6px; border-radius:3px; background:#F1D3E0}
-.balloon .bl-hero{flex:1; display:grid; grid-template-columns:1.2fr 1fr; align-items:center; padding:0 6%; gap:4%}
+.balloon .bl-nav i{width:24px; height:5px; border-radius:3px; background:#5B3A4C}
+.balloon .bl-hero{flex:1; display:grid; grid-template-columns:1.2fr 1fr; align-items:center; padding:0 6%; gap:4%; background:radial-gradient(circle at 18% 30%,rgba(255,255,255,.18) 0 1.5px,transparent 2px) 0 0/22px 22px, linear-gradient(120deg,#D9127A,#FF3D8B 70%,#FF7A55)}
 .balloon .bl-t{font:800 clamp(11px,2vw,21px)/1.12 var(--display); max-width:12ch}
-.balloon .bl-t span{color:#E2457F}
+.balloon .bl-t span{color:#FFD43B}
 .balloon .bl-btns{display:flex; gap:6px; margin-top:10%}
 .balloon .bl-btns span{height:clamp(10px,1.6vw,18px); border-radius:20px; width:38%}
-.balloon .b1{background:#E2457F} .balloon .b2{background:#4C6FFF}
+.balloon .b1{background:#fff} .balloon .b2{border:2px solid #fff}
 .balloon .bl-art{position:relative; height:100%; min-height:90px}
-.balloon .bl-art i{position:absolute; border-radius:50% 50% 48% 48%; width:34%; aspect-ratio:.86}
-.balloon .bl-art i:after{content:""; position:absolute; left:50%; top:100%; width:1px; height:60%; background:#CBB6C4}
-.balloon .c1{left:4%; top:14%; background:#E2457F} .balloon .c2{left:34%; top:2%; background:#FFC93C}
-.balloon .c3{left:62%; top:16%; background:#4C6FFF} .balloon .c4{left:32%; top:38%; background:#38C6A8}
+.balloon .bl-art i{position:absolute; border-radius:50% 50% 48% 48%; width:32%; aspect-ratio:.86}
+.balloon .bl-art i:after{content:""; position:absolute; left:50%; top:100%; width:1px; height:60%; background:rgba(255,255,255,.6)}
+.balloon .c1{left:6%; top:14%; background:#FFD43B} .balloon .c2{left:46%; top:4%; background:#7A4BF2}
+.balloon .c3{left:28%; top:34%; background:#fff} .balloon .c4{left:60%; top:36%; background:#14BFA0}
 .balloon .bl-row{display:grid; grid-template-columns:repeat(3,1fr); gap:4%; padding:3% 6% 5%}
-.balloon .bl-row div{background:#fff; border:1px solid #F1D3E0; border-radius:8px; padding:6% 7%}
+.balloon .bl-row div{border-radius:8px; padding:6% 7%; color:#fff}
+.balloon .bl-row div:nth-child(1){background:#FF3D8B} .balloon .bl-row div:nth-child(2){background:#7A4BF2} .balloon .bl-row div:nth-child(3){background:#F26413}
 .balloon .bl-row b{font:700 clamp(8px,1.2vw,13px)/1 var(--body)}
 
 /* превью: калькулятор */
@@ -649,10 +650,10 @@ textarea{resize:vertical}
             <div class="balloon">
               <div class="bl-top"><span class="bl-logo"></span><span class="bl-nav"><i></i><i></i><i></i></span></div>
               <div class="bl-hero">
-                <div class="bl-text"><div class="bl-t">Шары и оформление <span>праздников</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
+                <div class="bl-text"><div class="bl-t">Гелиевые шары <span>по всему Крыму</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
                 <div class="bl-art"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
               </div>
-              <div class="bl-row"><div><b>Букеты</b></div><div><b>Праздники</b></div><div><b>С логотипом</b></div></div>
+              <div class="bl-row"><div><b>Букеты</b></div><div><b>Подарки</b></div><div><b>Оформление</b></div></div>
             </div>
           </div>
         </div>
@@ -1034,10 +1035,10 @@ textarea{resize:vertical}
             <div class="balloon">
               <div class="bl-top"><span class="bl-logo"></span><span class="bl-nav"><i></i><i></i><i></i></span></div>
               <div class="bl-hero">
-                <div class="bl-text"><div class="bl-t">Шары и оформление <span>праздников</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
+                <div class="bl-text"><div class="bl-t">Гелиевые шары <span>по всему Крыму</span></div><div class="bl-btns"><span class="b1"></span><span class="b2"></span></div></div>
                 <div class="bl-art"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
               </div>
-              <div class="bl-row"><div><b>Букеты</b></div><div><b>Праздники</b></div><div><b>С логотипом</b></div></div>
+              <div class="bl-row"><div><b>Букеты</b></div><div><b>Подарки</b></div><div><b>Оформление</b></div></div>
             </div>
           </div>
         </div>
